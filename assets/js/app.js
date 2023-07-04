@@ -131,3 +131,38 @@ $(document).ready(function () {
     $(this).addClass("active-menu");
   });
 });
+
+
+
+// =========================================sidebar active
+$(document).ready(function() {
+    // Function to check if a section is in the viewport
+    function isSectionInView(section) {
+      var viewportTop = $(window).scrollTop();
+      var viewportBottom = viewportTop + $(window).height();
+      var sectionTop = section.offset().top;
+      var sectionBottom = sectionTop + section.outerHeight();
+      return sectionTop <= viewportBottom && sectionBottom >= viewportTop;
+    }
+  
+    // Function to handle the scrolling event
+    function handleScroll() {
+      var sections = $('section'); // Get all the sections
+      sections.each(function() {
+        var section = $(this);
+        var sectionId = section.attr('id');
+        var menuItem = $('li a[href="#' + sectionId + '"]');
+        if (isSectionInView(section)) {
+          menuItem.addClass('active-menu');
+          if(sectionId == 'contact'){
+            $("#portfolio").removeClass("active-menu");
+          }
+        } else {
+          menuItem.removeClass('active-menu');
+        }
+      });
+    }
+  
+    // Attach the scroll event handler
+    $(window).on('scroll', handleScroll);
+  });
