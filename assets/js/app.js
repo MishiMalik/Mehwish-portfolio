@@ -154,9 +154,9 @@ $(document).ready(function() {
         var menuItem = $('li a[href="#' + sectionId + '"]');
         if (isSectionInView(section)) {
           menuItem.addClass('active-menu');
-          if(sectionId == 'contact'){
-            $("#portfolio").removeClass("active-menu");
-          }
+        //   if(sectionId == 'contact'){
+        //     $("#portfolio").removeClass("active-menu");
+        //   }
         } else {
           menuItem.removeClass('active-menu');
         }
