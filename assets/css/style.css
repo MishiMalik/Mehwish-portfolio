@@ -302,3 +302,10 @@ body {
   color: white;
 }
 
+/* =============================skilss */
+.progress{
+  height: 7px;
+}
+.progress-bar{
+  background-color: var(--primary);
+}
