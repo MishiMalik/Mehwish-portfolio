@@ -135,34 +135,73 @@ $(document).ready(function () {
 
 
 // =========================================sidebar active
+// $(document).ready(function() {
+//     // Function to check if a section is in the viewport
+//     function isSectionInView(section) {
+//       var viewportTop = $(window).scrollTop();
+//       var viewportBottom = viewportTop + $(window).height();
+//       var sectionTop = section.offset().top;
+//       var sectionBottom = sectionTop + section.outerHeight();
+//       return sectionTop <= viewportBottom && sectionBottom >= viewportTop;
+//     }
+//
+//     // Function to handle the scrolling event
+//     function handleScroll() {
+//       var sections = $('section'); // Get all the sections
+//       sections.each(function() {
+//         var section = $(this);
+//         var sectionId = section.attr('id');
+//         var menuItem = $('li a[href="#' + sectionId + '"]');
+//         if (isSectionInView(section)) {
+//           menuItem.addClass('active-menu');
+//         //   if(sectionId == 'contact'){
+//         //     $("#portfolio").removeClass("active-menu");
+//         //   }
+//         } else {
+//           menuItem.removeClass('active-menu');
+//         }
+//       });
+//     }
+//
+//     // Attach the scroll event handler
+//     $(window).on('scroll', handleScroll);
+//   });
+
 $(document).ready(function() {
-    // Function to check if a section is in the viewport
-    function isSectionInView(section) {
-      var viewportTop = $(window).scrollTop();
-      var viewportBottom = viewportTop + $(window).height();
-      var sectionTop = section.offset().top;
-      var sectionBottom = sectionTop + section.outerHeight();
-      return sectionTop <= viewportBottom && sectionBottom >= viewportTop;
-    }
-  
-    // Function to handle the scrolling event
-    function handleScroll() {
-      var sections = $('section'); // Get all the sections
-      sections.each(function() {
-        var section = $(this);
-        var sectionId = section.attr('id');
-        var menuItem = $('li a[href="#' + sectionId + '"]');
-        if (isSectionInView(section)) {
-          menuItem.addClass('active-menu');
-        //   if(sectionId == 'contact'){
-        //     $("#portfolio").removeClass("active-menu");
-        //   }
-        } else {
-          menuItem.removeClass('active-menu');
+  function updateActiveLink() {
+    var scrollBottom = $(window).scrollTop() + $(window).height();
+    var documentHeight = $(document).height();
+
+    $('section').each(function() {
+      var sectionTop = $(this).offset().top;
+      var sectionHeight = $(this).outerHeight();
+      var sectionId = $(this).attr('id');
+      var sidebarLink;
+
+      if ($(this).hasClass('hire-me')) {
+        sidebarLink = $('.sidebar a[href="#skills"]');
+      } else {
+        sidebarLink = $('.sidebar a[href="#' + sectionId + '"]');
+      }
+
+      if (scrollBottom >= sectionTop && scrollBottom <= sectionTop + sectionHeight) {
+        sidebarLink.addClass('active-menu');
+      } else {
+        if(!$(this).hasClass("hire-me")) {
+          sidebarLink.removeClass('active-menu');
         }
-      });
+      }
+    });
+
+    // Check if scroll bottom reaches the end of the page
+    if (scrollBottom >= documentHeight) {
+      $('.sidebar a[href="#' + 'contact' + '"]').addClass('active-menu');
     }
-  
-    // Attach the scroll event handler
-    $(window).on('scroll', handleScroll);
-  });
+  }
+
+  updateActiveLink();
+
+  $(window).on("scroll", function () {
+    updateActiveLink()
+  })
+});
